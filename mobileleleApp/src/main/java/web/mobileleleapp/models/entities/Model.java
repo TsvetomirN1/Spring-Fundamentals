@@ -2,13 +2,13 @@ package web.mobileleleapp.models.entities;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "models")
 public class Model extends BaseEntity {
-
 
     @Column(nullable = false)
     private String name;
@@ -22,7 +22,8 @@ public class Model extends BaseEntity {
     private Integer endYear;
     @ManyToOne
     private Brand brand;
-
+    @OneToMany(mappedBy = "model")
+    private List<Offer> offers;
 
     public Model() {
     }
@@ -80,6 +81,15 @@ public class Model extends BaseEntity {
     public Model setBrand(Brand brand) {
         this.brand = brand;
         return this;
+    }
+
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 
     @PrePersist

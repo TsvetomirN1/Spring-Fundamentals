@@ -1,53 +1,40 @@
 package web.mobileleleapp.models.entities;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "brands")
 public class Brand extends BaseEntity {
 
     private String name;
-    private Instant created;
-    private Instant modified;
-//    private Set<Model> models;
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    private List<Model> models;
+
 
     public Brand() {
     }
-
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Brand setName(String name) {
         this.name = name;
+        return this;
     }
 
-    public Instant getCreated() {
-        return created;
+    public List<Model> getModels() {
+        return models;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
+    public Brand setModels(
+            List<Model> models) {
+        this.models = models;
+        return this;
     }
-
-    public Instant getModified() {
-        return modified;
-    }
-
-    public void setModified(Instant modified) {
-        this.modified = modified;
-    }
-
-//    @OneToMany(mappedBy = "brand",cascade = CascadeType.ALL)
-//    public Set<Model> getModels() {
-//        return models;
-//    }
-//
-//    public void setModels(Set<Model> models) {
-//        this.models = models;
-//    }
 }

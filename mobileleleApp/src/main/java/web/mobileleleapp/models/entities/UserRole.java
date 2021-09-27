@@ -1,26 +1,37 @@
 package web.mobileleleapp.models.entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-public class UserRole extends BaseEntity {
+public class UserRole {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role name;
 
-    public UserRole() {
+    public Role getName() {
+        return name;
     }
 
-    public Role getRole() {
-        return role;
+    public void setName(Role name) {
+        this.name = name;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+
     }
 }
+
+

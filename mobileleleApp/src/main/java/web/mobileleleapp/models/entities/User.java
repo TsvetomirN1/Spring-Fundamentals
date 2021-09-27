@@ -1,28 +1,37 @@
 package web.mobileleleapp.models.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
+
     @Column(name = "first_name")
     private String firstName;
+
     @Column(name = "last_name")
     private String lastName;
+
+    @Column
     private String password;
+
     @Column(name = "is_active")
-    private Boolean isActive;
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private UserRole role;
+    private boolean isActive;
+
     @Column(name = "image_url")
     private String imageUrl;
+
     @OneToMany(mappedBy = "seller")
     private List<Offer> offers;
+
+    @ManyToOne()
+    private UserRole role;
 
     public User() {
     }
@@ -51,20 +60,12 @@ public class User extends BaseEntity {
         this.lastName = lastName;
     }
 
-    public Boolean getActive() {
+    public boolean isActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         isActive = active;
-    }
-
-    public UserRole getUserRole() {
-        return role;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.role = userRole;
     }
 
     public String getImageUrl() {
@@ -89,5 +90,13 @@ public class User extends BaseEntity {
 
     public void setOffers(List<Offer> offers) {
         this.offers = offers;
+    }
+
+    public UserRole role() {
+        return role;
+    }
+
+    public void setName(UserRole role) {
+        this.role = role;
     }
 }

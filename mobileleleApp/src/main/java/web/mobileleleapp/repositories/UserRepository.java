@@ -3,14 +3,12 @@ package web.mobileleleapp.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import web.mobileleleapp.models.entities.Brand;
+import web.mobileleleapp.models.entities.User;
 
 import java.util.Optional;
 
 @Repository
-public interface BrandRepository extends JpaRepository<Brand,Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<Brand> findByName(String name);
-
-
+    Optional<User> findByUsername(String username);
 }

@@ -41,4 +41,10 @@ public class UserLoginController {
 
         return "redirect:/users/login";
     }
+
+    @GetMapping("/users/logout")
+    public String logout() {
+        userService.logoutUser();
+        return "index";
+    }
 }

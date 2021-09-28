@@ -92,9 +92,5 @@ public class Model extends BaseEntity {
         this.offers = offers;
     }
 
-    @PrePersist
-    public void beforeCreate() {
-        setCreated(Instant.now());
-    }
 
 }

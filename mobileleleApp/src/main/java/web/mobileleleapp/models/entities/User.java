@@ -30,8 +30,8 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "seller")
     private List<Offer> offers;
 
-    @ManyToOne()
-    private UserRole role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<UserRole> roles;
 
     public User() {
     }
@@ -92,11 +92,11 @@ public class User extends BaseEntity {
         this.offers = offers;
     }
 
-    public UserRole role() {
-        return role;
+    public List<UserRole> getRoles() {
+        return roles;
     }
 
-    public void setName(UserRole role) {
-        this.role = role;
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
     }
 }

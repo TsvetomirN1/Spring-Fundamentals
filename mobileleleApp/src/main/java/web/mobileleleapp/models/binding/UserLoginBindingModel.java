@@ -1,8 +1,5 @@
 package web.mobileleleapp.models.binding;
 
-
-
-
 public class UserLoginBindingModel {
 
 

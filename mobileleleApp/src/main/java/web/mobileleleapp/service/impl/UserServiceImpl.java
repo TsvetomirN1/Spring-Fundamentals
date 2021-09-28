@@ -3,7 +3,7 @@ package web.mobileleleapp.service.impl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import web.mobileleleapp.models.entities.User;
-import web.mobileleleapp.models.entities.UserRole;
+import web.mobileleleapp.models.security.CurrentUser;
 import web.mobileleleapp.models.service.UserLoginServiceModel;
 import web.mobileleleapp.repositories.UserRepository;
 import web.mobileleleapp.service.UserService;
@@ -17,12 +17,14 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final CurrentUser currentUser;
 
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRole role) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, CurrentUser currentUser) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
 
+        this.currentUser = currentUser;
     }
 
     @Override
@@ -57,5 +59,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void logoutUser() {
+        currentUser.setAnonymous(true);
+
+    }
 }
 

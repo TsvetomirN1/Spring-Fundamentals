@@ -106,4 +106,19 @@ public class Offer extends BaseEntity {
     public void setSeller(User seller) {
         this.seller = seller;
     }
+
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "description='" + description + '\'' +
+                ", engine=" + engine +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", mileage=" + mileage +
+                ", price=" + price +
+                ", transmission=" + transmission +
+                ", year=" + year +
+                ", model=" + model +
+                ", seller=" + seller +
+                '}' + super.toString();
+    }
 }

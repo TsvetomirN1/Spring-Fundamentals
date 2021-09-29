@@ -7,7 +7,6 @@ import web.mobileleleapp.service.ModelService;
 import web.mobileleleapp.service.UserService;
 
 
-
 @Component
 public class DBInit implements CommandLineRunner {
 

@@ -8,7 +8,7 @@ import web.mobileleleapp.models.entities.Brand;
 import java.util.Optional;
 
 @Repository
-public interface BrandRepository extends JpaRepository<Brand,Long> {
+public interface BrandRepository extends JpaRepository<Brand, Long> {
 
     Optional<Brand> findByName(String name);
 

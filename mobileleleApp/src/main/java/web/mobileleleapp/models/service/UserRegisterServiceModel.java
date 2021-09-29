@@ -20,7 +20,7 @@ public class UserRegisterServiceModel {
     @NotNull
     @Size(min = 3, max = 20, message = "Password required, from 3 to 20 symbols.")
     private String password;
-    @NotNull (message = "Role is required.")
+    @NotNull(message = "Role is required.")
     private Role roles;
 
     public String getFirstName() {

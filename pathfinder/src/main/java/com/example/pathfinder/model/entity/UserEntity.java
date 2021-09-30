@@ -17,9 +17,8 @@ public class UserEntity extends BaseEntity {
     private Integer age;
     private String password;
     private String email;
-    private Set<Role> role;
+    private Set<Role> roles;
     private LevelEnum level;
-
 
 
     public UserEntity() {
@@ -34,7 +33,7 @@ public class UserEntity extends BaseEntity {
         this.age = age;
     }
 
-    @Column(nullable = false,name = "fullname")
+    @Column(nullable = false, name = "full_name")
     public String getFullName() {
         return fullName;
     }
@@ -43,7 +42,7 @@ public class UserEntity extends BaseEntity {
         this.fullName = fullName;
     }
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     @Size(min = 2)
     public String getUsername() {
         return username;
@@ -72,12 +71,12 @@ public class UserEntity extends BaseEntity {
     }
 
     @ManyToMany
-    public Set<Role> getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Set<Role> role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Enumerated(EnumType.STRING)

@@ -19,13 +19,13 @@ public class Role extends BaseEntity {
     }
 
 
-    @NotNull
+
     @Enumerated(EnumType.STRING)
     public RoleEnum getRole() {
         return roles;
     }
 
-    public void setRole(RoleEnum role) {
+    public void setRole(RoleEnum roles) {
         this.roles = roles;
     }
 }

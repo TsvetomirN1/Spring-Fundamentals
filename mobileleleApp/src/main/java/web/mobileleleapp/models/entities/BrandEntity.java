@@ -4,36 +4,35 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.time.Instant;
 import java.util.List;
 
 @Entity
 @Table(name = "brands")
-public class Brand extends BaseEntity {
+public class BrandEntity extends BaseEntity {
 
     private String name;
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-    private List<Model> models;
+    private List<ModelEntity> models;
 
 
-    public Brand() {
+    public BrandEntity() {
     }
 
     public String getName() {
         return name;
     }
 
-    public Brand setName(String name) {
+    public BrandEntity setName(String name) {
         this.name = name;
         return this;
     }
 
-    public List<Model> getModels() {
+    public List<ModelEntity> getModels() {
         return models;
     }
 
-    public Brand setModels(
-            List<Model> models) {
+    public BrandEntity setModels(
+            List<ModelEntity> models) {
         this.models = models;
         return this;
     }

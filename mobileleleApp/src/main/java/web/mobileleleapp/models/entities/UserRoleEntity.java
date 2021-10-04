@@ -1,12 +1,13 @@
 package web.mobileleleapp.models.entities;
 
 
+import web.mobileleleapp.models.entities.enums.Role;
+
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-public class UserRole {
+public class UserRoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,14 +15,9 @@ public class UserRole {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role name;
+    private Role role;
 
-    public Role getName() {
-        return name;
-    }
-
-    public void setName(Role name) {
-        this.name = name;
+    public UserRoleEntity() {
     }
 
     public Long getId() {
@@ -30,7 +26,14 @@ public class UserRole {
 
     public void setId(Long id) {
         this.id = id;
+    }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
 

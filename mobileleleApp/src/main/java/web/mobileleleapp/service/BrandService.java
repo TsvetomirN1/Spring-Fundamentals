@@ -1,11 +1,11 @@
 package web.mobileleleapp.service;
 
 
-import web.mobileleleapp.models.entities.Brand;
+import web.mobileleleapp.models.entities.BrandEntity;
 
 public interface BrandService {
 
     void initializeBrand();
 
-    Brand findByName(String name);
+    BrandEntity findByName(String name);
 }

@@ -2,11 +2,12 @@ package web.mobileleleapp.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import web.mobileleleapp.models.entities.Role;
-import web.mobileleleapp.models.entities.UserRole;
+import web.mobileleleapp.models.entities.enums.Role;
+import web.mobileleleapp.models.entities.UserRoleEntity;
 
 @Repository
-public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
+public interface UserRoleRepository extends JpaRepository<UserRoleEntity, Long> {
 
-    UserRole findByName(Role name);
+    UserRoleEntity findByRole(Role role);
+
 }

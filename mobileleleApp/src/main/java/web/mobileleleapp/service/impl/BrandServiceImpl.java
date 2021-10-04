@@ -1,7 +1,7 @@
 package web.mobileleleapp.service.impl;
 
 import org.springframework.stereotype.Service;
-import web.mobileleleapp.models.entities.Brand;
+import web.mobileleleapp.models.entities.BrandEntity;
 import web.mobileleleapp.repositories.BrandRepository;
 import web.mobileleleapp.service.BrandService;
 
@@ -18,7 +18,7 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public void initializeBrand() {
         if (brandRepository.count() == 0) {
-            Brand volvo = new Brand();
+            BrandEntity volvo = new BrandEntity();
             volvo.setName("Volvo");
 
             brandRepository.save(volvo);
@@ -27,7 +27,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand findByName(String name) {
+    public BrandEntity findByName(String name) {
 
         return brandRepository
                 .findByName(name)

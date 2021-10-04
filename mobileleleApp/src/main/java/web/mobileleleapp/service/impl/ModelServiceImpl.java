@@ -1,9 +1,9 @@
 package web.mobileleleapp.service.impl;
 
 import org.springframework.stereotype.Service;
-import web.mobileleleapp.models.entities.Brand;
-import web.mobileleleapp.models.entities.Category;
-import web.mobileleleapp.models.entities.Model;
+import web.mobileleleapp.models.entities.BrandEntity;
+import web.mobileleleapp.models.entities.enums.Category;
+import web.mobileleleapp.models.entities.ModelEntity;
 import web.mobileleleapp.repositories.ModelRepository;
 import web.mobileleleapp.service.BrandService;
 import web.mobileleleapp.service.ModelService;
@@ -26,9 +26,9 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public void initializeModels() {
 
-        Brand volvo = brandService.findByName("Volvo");
+        BrandEntity volvo = brandService.findByName("Volvo");
 
-        Model v50 = new Model();
+        ModelEntity v50 = new ModelEntity();
         v50
                 .setName("v50")
                 .setCategory(Category.Car)
@@ -36,7 +36,7 @@ public class ModelServiceImpl implements ModelService {
                 .setStartYear(2003)
                 .setBrand(volvo);
 
-        Model s60 = new Model();
+        ModelEntity s60 = new ModelEntity();
         s60
                 .setName("s60")
                 .setCategory(Category.Car)

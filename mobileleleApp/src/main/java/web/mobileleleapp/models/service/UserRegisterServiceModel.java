@@ -1,7 +1,7 @@
 package web.mobileleleapp.models.service;
 
 
-import web.mobileleleapp.models.entities.Role;
+import web.mobileleleapp.models.entities.enums.Role;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

@@ -1,4 +1,4 @@
-package web.mobileleleapp.models.entities;
+package web.mobileleleapp.models.entities.enums;
 
 public enum Transmission {
     MANUAL,

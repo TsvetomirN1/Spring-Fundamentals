@@ -1,5 +1,7 @@
 package web.mobileleleapp.models.entities;
 
+import web.mobileleleapp.models.entities.enums.Category;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
@@ -8,24 +10,29 @@ import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "models")
-public class Model extends BaseEntity {
+public class ModelEntity extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
     @Enumerated(STRING)
     @Column(nullable = false)
     private Category category;
+
     @Column(nullable = false)
     private String imageUrl;
+
     @Column(nullable = false)
     private Integer startYear;
-    private Integer endYear;
-    @ManyToOne
-    private Brand brand;
-    @OneToMany(mappedBy = "model")
-    private List<Offer> offers;
 
-    public Model() {
+    private Integer endYear;
+
+    @ManyToOne
+    private BrandEntity brand;
+
+//    @OneToMany(mappedBy = "model")
+//    private List<OfferEntity> offers;
+
+    public ModelEntity() {
     }
 
 
@@ -33,7 +40,7 @@ public class Model extends BaseEntity {
         return name;
     }
 
-    public Model setName(String name) {
+    public ModelEntity setName(String name) {
         this.name = name;
         return this;
     }
@@ -42,7 +49,7 @@ public class Model extends BaseEntity {
         return category;
     }
 
-    public Model setCategory(Category category) {
+    public ModelEntity setCategory(Category category) {
         this.category = category;
         return this;
     }
@@ -51,7 +58,7 @@ public class Model extends BaseEntity {
         return imageUrl;
     }
 
-    public Model setImageUrl(String imageUrl) {
+    public ModelEntity setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
         return this;
     }
@@ -60,7 +67,7 @@ public class Model extends BaseEntity {
         return startYear;
     }
 
-    public Model setStartYear(Integer startYear) {
+    public ModelEntity setStartYear(Integer startYear) {
         this.startYear = startYear;
         return this;
     }
@@ -69,28 +76,28 @@ public class Model extends BaseEntity {
         return endYear;
     }
 
-    public Model setEndYear(Integer endYear) {
+    public ModelEntity setEndYear(Integer endYear) {
         this.endYear = endYear;
         return this;
     }
 
-    public Brand getBrand() {
+    public BrandEntity getBrand() {
         return brand;
     }
 
-    public Model setBrand(Brand brand) {
+    public ModelEntity setBrand(BrandEntity brand) {
         this.brand = brand;
         return this;
     }
 
 
-    public List<Offer> getOffers() {
-        return offers;
-    }
-
-    public void setOffers(List<Offer> offers) {
-        this.offers = offers;
-    }
+//    public List<OfferEntity> getOffers() {
+//        return offers;
+//    }
+//
+//    public void setOffers(List<OfferEntity> offers) {
+//        this.offers = offers;
+//    }
 
 
 }

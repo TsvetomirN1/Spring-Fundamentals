@@ -1,13 +1,15 @@
 package web.mobileleleapp.models.entities;
 
 
+import web.mobileleleapp.models.entities.enums.Engine;
+import web.mobileleleapp.models.entities.enums.Transmission;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "offers")
-public class Offer extends BaseEntity {
+public class OfferEntity extends BaseEntity {
 
     @Column(nullable = false)
     private String description;
@@ -16,17 +18,17 @@ public class Offer extends BaseEntity {
     @Column(nullable = false)
     private String imageUrl;
     private Integer mileage;
-    private BigDecimal price;
+    private Integer price;
     @Enumerated(EnumType.STRING)
     private Transmission transmission;
     private Integer year;
     @ManyToOne
-    private Model model;
+    private ModelEntity model;
     @ManyToOne
-    private User seller;
+    private UserEntity seller;
 
 
-    public Offer() {
+    public OfferEntity() {
     }
 
 
@@ -38,7 +40,6 @@ public class Offer extends BaseEntity {
         this.description = description;
     }
 
-
     public Engine getEngine() {
         return engine;
     }
@@ -46,7 +47,6 @@ public class Offer extends BaseEntity {
     public void setEngine(Engine engine) {
         this.engine = engine;
     }
-
 
     public String getImageUrl() {
         return imageUrl;
@@ -64,15 +64,13 @@ public class Offer extends BaseEntity {
         this.mileage = mileage;
     }
 
-
-    public BigDecimal getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
-
 
     public Transmission getTransmission() {
         return transmission;
@@ -90,35 +88,19 @@ public class Offer extends BaseEntity {
         this.year = year;
     }
 
-
-    public Model getModel() {
+    public ModelEntity getModel() {
         return model;
     }
 
-    public void setModel(Model model) {
+    public void setModel(ModelEntity model) {
         this.model = model;
     }
 
-    public User getSeller() {
+    public UserEntity getSeller() {
         return seller;
     }
 
-    public void setSeller(User seller) {
+    public void setSeller(UserEntity seller) {
         this.seller = seller;
-    }
-
-    @Override
-    public String toString() {
-        return "Offer{" +
-                "description='" + description + '\'' +
-                ", engine=" + engine +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", mileage=" + mileage +
-                ", price=" + price +
-                ", transmission=" + transmission +
-                ", year=" + year +
-                ", model=" + model +
-                ", seller=" + seller +
-                '}' + super.toString();
     }
 }

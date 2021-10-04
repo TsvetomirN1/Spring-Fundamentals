@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class UserEntity extends BaseEntity {
 
     @Column(name = "username", unique = true, nullable = false)
     private String username;
@@ -27,13 +27,13 @@ public class User extends BaseEntity {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @OneToMany(mappedBy = "seller")
-    private List<Offer> offers;
+//    @OneToMany(mappedBy = "seller")
+//    private List<OfferEntity> offers;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<UserRole> roles;
+    private Set<UserRoleEntity> roles = new HashSet<>();
 
-    public User() {
+    public UserEntity() {
     }
 
     public String getUsername() {
@@ -60,6 +60,14 @@ public class User extends BaseEntity {
         this.lastName = lastName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public boolean isActive() {
         return isActive;
     }
@@ -76,27 +84,22 @@ public class User extends BaseEntity {
         this.imageUrl = imageUrl;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Offer> getOffers() {
-        return offers;
-    }
-
-    public void setOffers(List<Offer> offers) {
-        this.offers = offers;
-    }
-
-    public List<UserRole> getRoles() {
+    public Set<UserRoleEntity> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<UserRole> roles) {
+    public void setRoles(Set<UserRoleEntity> roles) {
         this.roles = roles;
     }
+
+    //    public List<OfferEntity> getOffers() {
+//        return offers;
+//    }
+//
+//    public void setOffers(List<OfferEntity> offers) {
+//        this.offers = offers;
+//    }
+
+
+
 }

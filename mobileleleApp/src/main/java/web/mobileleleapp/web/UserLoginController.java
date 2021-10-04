@@ -39,12 +39,10 @@ public class UserLoginController {
                 userLoginBindingModel.getUsername(),
                 loginSuccessful);
 
-        return "redirect:/users/login";
-    }
+        if (loginSuccessful) {
+            return "redirect:/";
+        }
 
-    @GetMapping("/users/logout")
-    public String logout() {
-        userService.logoutUser();
-        return "index";
+        return "redirect:/users/login";
     }
 }

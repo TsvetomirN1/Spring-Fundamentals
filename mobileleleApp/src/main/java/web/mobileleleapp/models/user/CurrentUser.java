@@ -13,10 +13,14 @@ import java.util.Set;
 public class CurrentUser {
 
     private boolean loggedIn;
-    private String userName;
+    private String username;
     private String firstName;
     private String lastName;
     private Set<Role> roles = new HashSet<>();
+
+
+    public CurrentUser() {
+    }
 
     public boolean isLoggedIn() {
         return loggedIn;
@@ -27,12 +31,12 @@ public class CurrentUser {
         return this;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public CurrentUser setUserName(String userName) {
-        this.userName = userName;
+    public CurrentUser setUsername(String username) {
+        this.username = username;
         return this;
     }
 
@@ -54,6 +58,14 @@ public class CurrentUser {
         return this;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public CurrentUser addRole(Role role) {
         roles.add(role);
         return this;
@@ -68,9 +80,12 @@ public class CurrentUser {
         return roles.contains(Role.Admin);
     }
 
-    public void clean() {
-        setLoggedIn(false).
-                setUserName(null).setFirstName(null).setLastName(null).
-                clearRoles();
+    public void clear() {
+        setLoggedIn(false);
+        setUsername(null);
+        setFirstName(null);
+        setLastName(null);
+        clearRoles();
     }
+
 }

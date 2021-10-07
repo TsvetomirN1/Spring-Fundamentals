@@ -5,6 +5,7 @@ import web.mobileleleapp.models.entities.enums.Transmission;
 
 public class OfferSummaryView {
 
+    private Long id;
     private String description;
     private Engine engine;
     private String imageUrl;
@@ -15,6 +16,15 @@ public class OfferSummaryView {
     private String model;
 
     public OfferSummaryView() {
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {

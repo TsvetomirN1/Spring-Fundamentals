@@ -13,7 +13,7 @@ public class Route extends BaseEntity {
     private String description;
     private LevelEnum level;
     private String name;
-    private UserEntity author;
+    private User author;
     private String videoUrl;
     private Set<Category> categories;
 
@@ -58,11 +58,11 @@ public class Route extends BaseEntity {
     }
 
     @ManyToOne
-    public UserEntity getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserEntity author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

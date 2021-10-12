@@ -12,7 +12,7 @@ public class Picture extends BaseEntity {
 
     private String title;
     private String url;
-    private UserEntity author;
+    private User author;
     private Route route;
 
     public Picture() {
@@ -36,11 +36,11 @@ public class Picture extends BaseEntity {
     }
 
     @ManyToOne
-    public UserEntity getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserEntity author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

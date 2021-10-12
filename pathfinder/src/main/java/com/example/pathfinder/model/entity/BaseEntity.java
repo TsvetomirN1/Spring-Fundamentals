@@ -8,9 +8,9 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
-public class BaseEntity {
+public abstract class BaseEntity {
 
-    @NotNull
+
     private Long id;
 
     public BaseEntity() {

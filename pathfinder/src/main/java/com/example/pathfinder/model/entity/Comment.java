@@ -14,7 +14,7 @@ public class Comment extends BaseEntity {
     private Boolean approved;
     private LocalDateTime created;
     private String textContent;
-    private UserEntity author;
+    private User author;
     private Route route;
 
     public Comment() {
@@ -48,11 +48,11 @@ public class Comment extends BaseEntity {
     }
 
     @ManyToOne
-    public UserEntity getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserEntity author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

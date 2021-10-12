@@ -12,8 +12,8 @@ public class Message extends BaseEntity {
 
     private LocalDateTime dateTime;
     private String textContent;
-    private UserEntity author;
-    private UserEntity recipient;
+    private User author;
+    private User recipient;
 
     public Message() {
     }
@@ -37,20 +37,20 @@ public class Message extends BaseEntity {
     }
 
     @ManyToOne
-    public UserEntity getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserEntity author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 
     @ManyToOne
-    public UserEntity getRecipient() {
+    public User getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(UserEntity recipient) {
+    public void setRecipient(User recipient) {
         this.recipient = recipient;
     }
 }

@@ -3,36 +3,37 @@ package web.mobileleleapp.models.view;
 import web.mobileleleapp.models.entities.enums.Engine;
 import web.mobileleleapp.models.entities.enums.Transmission;
 
-public class OfferSummaryView {
+import java.time.Instant;
 
-    private Long id;
+public class OfferDetailsView {
+
     private String description;
+
     private Engine engine;
+
+    private Instant created;
+
+    private Instant modified;
+
     private String imageUrl;
+
     private int mileage;
+
+    private String sellerFullName;
+
     private int price;
+
     private Transmission transmission;
+
     private int year;
+
     private String model;
+
     private String brand;
 
-    public OfferSummaryView() {
-    }
+    private Long id;
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public OfferDetailsView() {
     }
 
     public String getDescription() {
@@ -51,6 +52,22 @@ public class OfferSummaryView {
         this.engine = engine;
     }
 
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
+
+    public Instant getModified() {
+        return modified;
+    }
+
+    public void setModified(Instant modified) {
+        this.modified = modified;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -65,6 +82,14 @@ public class OfferSummaryView {
 
     public void setMileage(int mileage) {
         this.mileage = mileage;
+    }
+
+    public String getSellerFullName() {
+        return sellerFullName;
+    }
+
+    public void setSellerFullName(String sellerFullName) {
+        this.sellerFullName = sellerFullName;
     }
 
     public int getPrice() {
@@ -97,5 +122,21 @@ public class OfferSummaryView {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

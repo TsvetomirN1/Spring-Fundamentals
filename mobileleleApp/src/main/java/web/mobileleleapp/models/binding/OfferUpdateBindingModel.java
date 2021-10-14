@@ -1,30 +1,52 @@
-package web.mobileleleapp.models.view;
+package web.mobileleleapp.models.binding;
+
 
 import web.mobileleleapp.models.entities.enums.Engine;
 import web.mobileleleapp.models.entities.enums.Transmission;
 
-public class OfferSummaryView {
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
+public class OfferUpdateBindingModel {
+
+    @NotNull
+    @Min(100)
+    private Integer price;
 
     private Long id;
+
+    @NotBlank
     private String description;
+
+    @NotNull
     private Engine engine;
+
+    @NotBlank
     private String imageUrl;
-    private int mileage;
-    private int price;
+
+    @NotNull
+    @PositiveOrZero
+    private Integer mileage;
+
+    @NotNull
     private Transmission transmission;
-    private int year;
-    private String model;
-    private String brand;
 
-    public OfferSummaryView() {
+    @NotNull
+    @Min(1930)
+    private Integer year;
+
+
+    public OfferUpdateBindingModel() {
     }
 
-    public String getBrand() {
-        return brand;
+    public Integer getPrice() {
+        return price;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public Long getId() {
@@ -59,20 +81,12 @@ public class OfferSummaryView {
         this.imageUrl = imageUrl;
     }
 
-    public int getMileage() {
+    public Integer getMileage() {
         return mileage;
     }
 
-    public void setMileage(int mileage) {
+    public void setMileage(Integer mileage) {
         this.mileage = mileage;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public Transmission getTransmission() {
@@ -83,19 +97,11 @@ public class OfferSummaryView {
         this.transmission = transmission;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 }

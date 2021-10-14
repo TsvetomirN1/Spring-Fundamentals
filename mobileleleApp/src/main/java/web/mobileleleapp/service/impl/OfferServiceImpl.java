@@ -5,11 +5,14 @@ import org.springframework.stereotype.Service;
 import web.mobileleleapp.models.entities.OfferEntity;
 import web.mobileleleapp.models.entities.enums.Engine;
 import web.mobileleleapp.models.entities.enums.Transmission;
+import web.mobileleleapp.models.service.OfferUpdateServiceModel;
+import web.mobileleleapp.models.view.OfferDetailsView;
 import web.mobileleleapp.models.view.OfferSummaryView;
 import web.mobileleleapp.repositories.ModelRepository;
 import web.mobileleleapp.repositories.OfferRepository;
 import web.mobileleleapp.repositories.UserRepository;
 import web.mobileleleapp.service.OfferService;
+import web.mobileleleapp.web.exception.ObjectNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,12 +78,54 @@ public class OfferServiceImpl implements OfferService {
                 collect(Collectors.toList());
     }
 
+    @Override
+    public OfferDetailsView findById(Long id) {
+
+        OfferDetailsView offerDetailsView = this.offerRepository.findById(id).map(this::mapDetailsView).get();
+
+        return offerDetailsView;
+    }
+
+    @Override
+    public void deleteOffer(Long id) {
+        offerRepository.deleteById(id);
+
+    }
+
+    @Override
+    public void updateOffer(OfferUpdateServiceModel offerModel) {
+        OfferEntity offerEntity =
+                offerRepository.findById(offerModel.getId()).orElseThrow(() ->
+                        new ObjectNotFoundException("Offer with id " + offerModel.getId() + " not found!"));
+
+
+        offerEntity.setPrice(offerModel.getPrice());
+        offerEntity.setDescription(offerModel.getDescription());
+        offerEntity.setEngine(offerModel.getEngine());
+        offerEntity.setImageUrl(offerModel.getImageUrl());
+        offerEntity.setMileage(offerModel.getMileage());
+        offerEntity.setTransmission(offerModel.getTransmission());
+        offerEntity.setYear(offerModel.getYear());
+
+        offerRepository.save(offerEntity);
+
+    }
+
     private OfferSummaryView map(OfferEntity offerEntity) {
         OfferSummaryView summaryView = modelMapper
                 .map(offerEntity, OfferSummaryView.class);
 
         summaryView.setModel(offerEntity.getModel().getName());
+        summaryView.setBrand(offerEntity.getModel().getBrand().getName());
 
         return summaryView;
+    }
+
+    private OfferDetailsView mapDetailsView(OfferEntity offer) {
+        OfferDetailsView offerDetailsView = this.modelMapper.map(offer, OfferDetailsView.class);
+        offerDetailsView.setModel(offer.getModel().getName());
+        offerDetailsView.setBrand(offer.getModel().getBrand().getName());
+        offerDetailsView.setSellerFullName(offer.getSeller().getFirstName() + " " + offer.getSeller().getLastName());
+        return offerDetailsView;
     }
 }

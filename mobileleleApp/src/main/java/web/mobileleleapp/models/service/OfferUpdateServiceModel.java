@@ -1,38 +1,28 @@
-package web.mobileleleapp.models.view;
+package web.mobileleleapp.models.service;
+
 
 import web.mobileleleapp.models.entities.enums.Engine;
 import web.mobileleleapp.models.entities.enums.Transmission;
 
-public class OfferSummaryView {
+public class OfferUpdateServiceModel {
+
+    private String description;
+
+    private Engine engine;
+
+    private String imageUrl;
+
+    private int mileage;
+
+    private int price;
+
+    private Transmission transmission;
+
+    private int year;
 
     private Long id;
-    private String description;
-    private Engine engine;
-    private String imageUrl;
-    private int mileage;
-    private int price;
-    private Transmission transmission;
-    private int year;
-    private String model;
-    private String brand;
 
-    public OfferSummaryView() {
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public OfferUpdateServiceModel() {
     }
 
     public String getDescription() {
@@ -91,11 +81,11 @@ public class OfferSummaryView {
         this.year = year;
     }
 
-    public String getModel() {
-        return model;
+    public Long getId() {
+        return id;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setId(Long id) {
+        this.id = id;
     }
 }

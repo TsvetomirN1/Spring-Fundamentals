@@ -1,7 +1,6 @@
 package web.mobileleleapp.models.service;
 
 
-
 public class UserRegisterServiceModel {
 
     private String firstName;

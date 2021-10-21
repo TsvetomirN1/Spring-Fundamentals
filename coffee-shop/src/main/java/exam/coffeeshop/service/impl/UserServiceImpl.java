@@ -44,4 +44,10 @@ public class UserServiceImpl implements UserService {
         currentUser.setUsername(username);
 
     }
+
+    @Override
+    public UserEntity findById(Long id) {
+
+        return userRepository.findById(id).orElse(null);
+    }
 }

@@ -1,8 +1,7 @@
 package exam.coffeeshop.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -13,6 +12,7 @@ public class UserEntity extends BaseEntity{
     private String lastName;
     private String password;
     private String email;
+    private Set<OrderEntity> orders;
 
     public UserEntity() {
     }
@@ -57,5 +57,14 @@ public class UserEntity extends BaseEntity{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @OneToMany(mappedBy = "employee",fetch = FetchType.EAGER)
+    public Set<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<OrderEntity> orders) {
+        this.orders = orders;
     }
 }

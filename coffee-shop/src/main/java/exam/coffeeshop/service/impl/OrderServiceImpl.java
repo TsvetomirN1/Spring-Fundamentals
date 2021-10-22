@@ -3,12 +3,16 @@ package exam.coffeeshop.service.impl;
 import exam.coffeeshop.current.CurrentUser;
 import exam.coffeeshop.model.entity.OrderEntity;
 import exam.coffeeshop.model.service.OrderServiceModel;
+import exam.coffeeshop.model.view.OrderViewModel;
 import exam.coffeeshop.repository.OrderRepository;
 import exam.coffeeshop.service.CategoryService;
 import exam.coffeeshop.service.OrderService;
 import exam.coffeeshop.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -39,5 +43,19 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
 
 
+    }
+
+    @Override
+    public List<OrderViewModel> findAllOrdersOrderByPriceDesc() {
+
+        return orderRepository.findAllByOrderByPriceDesc()
+                .stream()
+                .map(orderEntity -> modelMapper.map(orderEntity, OrderViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void readyOrder(Long id) {
+        orderRepository.deleteById(id);
     }
 }

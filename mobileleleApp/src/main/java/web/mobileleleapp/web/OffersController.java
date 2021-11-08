@@ -1,7 +1,18 @@
 package web.mobileleleapp.web;
 
-
+import web.mobileleleapp.model.binding.OfferAddBindModel;
+import web.mobileleleapp.model.binding.OfferUpdateBindingModel;
+import web.mobileleleapp.model.entity.enums.EngineEnum;
+import web.mobileleleapp.model.entity.enums.TransmissionEnum;
+import web.mobileleleapp.model.service.OfferAddServiceModel;
+import web.mobileleleapp.model.service.OfferUpdateServiceModel;
+import web.mobileleleapp.model.view.OfferDetailsView;
+import web.mobileleleapp.service.BrandService;
+import web.mobileleleapp.service.OfferService;
+import web.mobileleleapp.service.impl.MobileleUser;
+import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,25 +20,20 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import web.mobileleleapp.models.binding.OfferUpdateBindingModel;
-import web.mobileleleapp.models.entities.enums.Engine;
-import web.mobileleleapp.models.entities.enums.Transmission;
-import web.mobileleleapp.models.service.OfferUpdateServiceModel;
-import web.mobileleleapp.models.view.OfferDetailsView;
-import web.mobileleleapp.service.OfferService;
-
-import javax.validation.Valid;
 
 @Controller
 public class OffersController {
-
     private final OfferService offerService;
     private final ModelMapper modelMapper;
+    private final BrandService brandService;
 
-    public OffersController(OfferService offerService, ModelMapper modelMapper) {
+    public OffersController(OfferService offerService,
+                            ModelMapper modelMapper, BrandService brandService) {
         this.offerService = offerService;
         this.modelMapper = modelMapper;
+        this.brandService = brandService;
     }
 
     // GET
@@ -40,7 +46,7 @@ public class OffersController {
 
     @GetMapping("/offers/{id}/details")
     public String showOffer(
-            @PathVariable Long id, Model model){
+            @PathVariable Long id, Model model) {
         model.addAttribute("offer", this.offerService.findById(id));
         return "details";
     }
@@ -63,16 +69,16 @@ public class OffersController {
                 offerDetailsView,
                 OfferUpdateBindingModel.class
         );
-        model.addAttribute("engines", Engine.values());
-        model.addAttribute("transmissions", Transmission.values());
+        model.addAttribute("engines", EngineEnum.values());
+        model.addAttribute("transmissions", TransmissionEnum.values());
         model.addAttribute("offerModel", offerModel);
         return "update";
     }
 
     @GetMapping("/offers/{id}/edit/errors")
     public String editOfferErrors(@PathVariable Long id, Model model) {
-        model.addAttribute("engines", Engine.values());
-        model.addAttribute("transmissions", Transmission.values());
+        model.addAttribute("engines", EngineEnum.values());
+        model.addAttribute("transmissions", TransmissionEnum.values());
         return "update";
     }
 
@@ -98,5 +104,31 @@ public class OffersController {
         offerService.updateOffer(serviceModel);
 
         return "redirect:/offers/" + id + "/details";
+    }
+
+    @GetMapping("/offers/add")
+    public String getAddOfferPage(Model model) {
+
+        if (!model.containsAttribute("offerAddBindModel")) {
+            model.
+                addAttribute("offerAddBindModel", new OfferAddBindModel()).
+                addAttribute("brandsModels", brandService.getAllBrands());
+        }
+        return "offer-add";
+    }
+
+    @PostMapping("/offers/add")
+    public String addOffer(@Valid OfferAddBindModel offerAddBindModel,
+                           BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes,
+                            @AuthenticationPrincipal MobileleUser user) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("offerAddBindModel", offerAddBindModel)
+                    .addFlashAttribute("org.springframework.validation.BindingResult.offerAddBindModel", bindingResult)
+                    .addFlashAttribute("brandsModels", brandService.getAllBrands());
+            return "redirect:/offers/add";
+        }
+        OfferAddServiceModel savedOfferAddServiceModel = offerService.addOffer(offerAddBindModel, user.getUserIdentifier());
+        return "redirect:/offers/" + savedOfferAddServiceModel.getId() + "/details";
     }
 }

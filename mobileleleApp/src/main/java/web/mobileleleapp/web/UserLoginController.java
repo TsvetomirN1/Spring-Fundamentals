@@ -1,49 +1,30 @@
 package web.mobileleleapp.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import web.mobileleleapp.models.binding.UserLoginBindingModel;
-import web.mobileleleapp.models.service.UserLoginServiceModel;
-import web.mobileleleapp.service.UserService;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserLoginController {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(UserLoginController.class);
+  @GetMapping("/users/login")
+  public String login() {
+    return "auth-login";
+  }
 
-    private final UserService userService;
+  @PostMapping("/users/login-error")
+  public String failedLogin(
+      @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+      String userName,
+      RedirectAttributes attributes
+  ) {
 
-    public UserLoginController(UserService userService) {
-        this.userService = userService;
-    }
+    attributes.addFlashAttribute("bad_credentials", true);
+    attributes.addFlashAttribute("username", userName);
 
-    @GetMapping("/users/login")
-    public String login() {
-        return "auth-login";
-    }
-
-    @PostMapping("/users/login")
-    public String login(UserLoginBindingModel userLoginBindingModel) {
-
-        // Delegate the logic to the service layer
-        boolean loginSuccessful = userService.
-                login(new UserLoginServiceModel().
-                        setUsername(userLoginBindingModel.getUsername()).
-                        setRawPassword(userLoginBindingModel.getPassword()));
-
-        LOGGER.info("User tried to login. User with name {} tried to login. Success = {}?",
-                userLoginBindingModel.getUsername(),
-                loginSuccessful);
-
-        if (loginSuccessful) {
-            return "redirect:/";
-        }
-
-        return "redirect:/users/login";
-    }
+    return "redirect:/users/login";
+  }
 }

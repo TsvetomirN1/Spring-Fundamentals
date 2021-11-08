@@ -1,44 +1,41 @@
 package web.mobileleleapp.service.impl;
 
-import org.modelmapper.ModelMapper;
+import web.mobileleleapp.model.entity.UserEntity;
+import web.mobileleleapp.model.entity.UserRoleEntity;
+import web.mobileleleapp.model.entity.enums.UserRoleEnum;
+import web.mobileleleapp.model.service.UserRegistrationServiceModel;
+import web.mobileleleapp.repository.UserRepository;
+import web.mobileleleapp.repository.UserRoleRepository;
+import web.mobileleleapp.service.UserService;
+import java.util.List;
+import java.util.Set;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import web.mobileleleapp.models.entities.UserRoleEntity;
-import web.mobileleleapp.models.entities.enums.Role;
-import web.mobileleleapp.models.entities.UserEntity;
-import web.mobileleleapp.models.service.UserRegisterServiceModel;
-import web.mobileleleapp.models.user.CurrentUser;
-import web.mobileleleapp.models.service.UserLoginServiceModel;
-import web.mobileleleapp.repositories.UserRepository;
-import web.mobileleleapp.repositories.UserRoleRepository;
-import web.mobileleleapp.service.UserService;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
 
 @Service
 public class UserServiceImpl implements UserService {
 
-
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final CurrentUser currentUser;
     private final UserRoleRepository userRoleRepository;
-    private final ModelMapper modelMapper;
+    private final MobileleUserServiceImpl mobileleUserService;
 
-
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, CurrentUser currentUser, UserRoleRepository userRoleRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder,
+                           UserRepository userRepository,
+                           UserRoleRepository userRoleRepository,
+        MobileleUserServiceImpl mobileleUserService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
-        this.currentUser = currentUser;
         this.userRoleRepository = userRoleRepository;
-        this.modelMapper = modelMapper;
+        this.mobileleUserService = mobileleUserService;
     }
 
     @Override
-    public void initializeUserAndRoles() {
+    public void initializeUsersAndRoles() {
         initializeRoles();
         initializeUsers();
     }
@@ -46,25 +43,27 @@ public class UserServiceImpl implements UserService {
     private void initializeUsers() {
         if (userRepository.count() == 0) {
 
-            UserRoleEntity adminRole = userRoleRepository.findByRole(Role.Admin);
-            UserRoleEntity userRole = userRoleRepository.findByRole(Role.User);
+            UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ADMIN);
+            UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.USER);
 
             UserEntity admin = new UserEntity();
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("test"));
-            admin.setFirstName("Admin");
-            admin.setLastName("Adminov");
-            admin.setActive(true);
+            admin
+                    .setUsername("admin")
+                    .setPassword(passwordEncoder.encode("test"))
+                    .setFirstName("Admin")
+                    .setLastName("Adminov")
+                    .setActive(true);
 
             admin.setRoles(Set.of(adminRole, userRole));
             userRepository.save(admin);
 
             UserEntity pesho = new UserEntity();
-            pesho.setUsername("pesho");
-            pesho.setPassword(passwordEncoder.encode("test"));
-            pesho.setFirstName("Pesho");
-            pesho.setLastName("Petrov");
-            pesho.setActive(true);
+            pesho
+                    .setUsername("pesho")
+                    .setPassword(passwordEncoder.encode("test"))
+                    .setFirstName("Pesho")
+                    .setLastName("Petrov")
+                    .setActive(true);
 
             pesho.setRoles(Set.of(userRole));
             userRepository.save(pesho);
@@ -75,99 +74,46 @@ public class UserServiceImpl implements UserService {
 
         if (userRoleRepository.count() == 0) {
             UserRoleEntity adminRole = new UserRoleEntity();
-            adminRole.setRole(Role.Admin);
+            adminRole.setRole(UserRoleEnum.ADMIN);
 
             UserRoleEntity userRole = new UserRoleEntity();
-            userRole.setRole(Role.User);
+            userRole.setRole(UserRoleEnum.USER);
 
             userRoleRepository.saveAll(List.of(adminRole, userRole));
         }
     }
 
     @Override
-    public boolean login(UserLoginServiceModel userLoginServiceModel) {
+    public void registerAndLoginUser(UserRegistrationServiceModel userRegistrationServiceModel) {
 
-        Optional<UserEntity> userEntityOpt =
-                userRepository.findByUsername(userLoginServiceModel.getUsername());
-
-        if (userEntityOpt.isEmpty()) {
-            logoutUser();
-            return false;
-        } else {
-            boolean success = passwordEncoder.matches(
-                    userLoginServiceModel.getRawPassword(),
-                    userEntityOpt.get().getPassword());
-
-            if (success) {
-                UserEntity loggedInUser = userEntityOpt.get();
-                login(loggedInUser);
-                loggedInUser.getRoles().
-                        forEach(r -> currentUser.addRole(r.getRole()));
-            }
-
-            return success;
-        }
-    }
-
-    @Override
-    public void register(UserRegisterServiceModel userRegisterServiceModel) {
-
-        UserRoleEntity userRole = userRoleRepository.findByRole(Role.User);
+        UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.USER);
 
         UserEntity newUser = new UserEntity();
 
-        newUser.setUsername(userRegisterServiceModel.getUsername());
-        newUser.setFirstName(userRegisterServiceModel.getFirstName());
-        newUser.setLastName(userRegisterServiceModel.getLastName());
-        newUser.setActive(true);
-        newUser.setPassword(passwordEncoder.encode(userRegisterServiceModel.getPassword()));
-        newUser.setRoles(Set.of(userRole));
+        newUser.
+                setUsername(userRegistrationServiceModel.getUsername()).
+                setFirstName(userRegistrationServiceModel.getFirstName()).
+                setLastName(userRegistrationServiceModel.getLastName()).
+                setActive(true).
+                setPassword(passwordEncoder.encode(userRegistrationServiceModel.getPassword())).
+                setRoles(Set.of(userRole));
 
         newUser = userRepository.save(newUser);
-        login(newUser);
 
+        // this is the Spring representation of a user
+        UserDetails principal = mobileleUserService.loadUserByUsername(newUser.getUsername());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+            principal,
+            newUser.getPassword(),
+            principal.getAuthorities()
+        );
+
+        SecurityContextHolder.
+            getContext().
+            setAuthentication(authentication);
     }
 
-
-//        Optional<UserEntity> userEntity = userRepository
-//                .findByUsername(userRegisterServiceModel.getUsername());
-//
-//        if (userEntity.isPresent()) {
-//            throw new IllegalStateException(
-//                    "User with username " + userRegisterServiceModel.getUsername() + " already exists!"
-//            );
-//        }
-//
-//        UserEntity user = modelMapper.map(userRegisterServiceModel, UserEntity.class);
-//        UserRoleEntity userRole = userRoleRepository
-//                .findByRole(Role.User).orElse(null);
-//
-//        user.setPassword(passwordEncoder.encode(userRegisterServiceModel.getPassword()));
-//        user.setActive(true);
-//        user.setRoles(Set.of(userRole));
-//
-//        userRepository.save(user);
-//    }
-
-
-    @Override
-    public void logoutUser() {
-        currentUser.clear();
-
-    }
-
-    @Override
     public boolean isUserNameFree(String username) {
-
-        return userRepository.findByUsernameIgnoreCase(username).
-                isEmpty();
-    }
-
-    private void login(UserEntity user) {
-        currentUser.setLoggedIn(true);
-        currentUser.setUsername(user.getUsername());
-        currentUser.setFirstName(user.getFirstName());
-        currentUser.setLastName(user.getLastName());
+        return userRepository.findByUsernameIgnoreCase(username).isEmpty();
     }
 }
-

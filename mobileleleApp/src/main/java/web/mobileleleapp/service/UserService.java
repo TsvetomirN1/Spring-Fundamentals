@@ -1,17 +1,12 @@
 package web.mobileleleapp.service;
 
-import web.mobileleleapp.models.service.UserLoginServiceModel;
-import web.mobileleleapp.models.service.UserRegisterServiceModel;
+import web.mobileleleapp.model.service.UserRegistrationServiceModel;
 
 public interface UserService {
 
-    void initializeUserAndRoles();
+  void initializeUsersAndRoles();
 
-    boolean login(UserLoginServiceModel userLoginServiceModel);
+  void registerAndLoginUser(UserRegistrationServiceModel userRegistrationServiceModel);
 
-    void register(UserRegisterServiceModel userRegisterServiceModel);
-
-    void logoutUser();
-
-    boolean isUserNameFree(String username);
+  boolean isUserNameFree(String username);
 }

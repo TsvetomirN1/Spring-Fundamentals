@@ -17,17 +17,17 @@
             th:action="@{/users/register}"
             th:method="post"
             th:object="${userModel}"
-            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label for="firstName" class="text-white font-weight-bold">First Name</label>
                 <input
-                        id="firstName"
-                        th:field="*{firstName}"
-                        th:errorclass="is-invalid"
-                        type="text"
-                        class="form-control"
-                        placeholder="First name"/>
+                    id="firstName"
+                    th:field="*{firstName}"
+                    th:errorclass="is-invalid"
+                    type="text"
+                    class="form-control"
+                    placeholder="First name"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     First name is required and should be between 4 and 20 symbols.
                 </p>
@@ -55,7 +55,7 @@
                        th:errorclass="is-invalid"
                        type="text" min="2" max="20" class="form-control"
                        placeholder="First name"/>
-                <p class="invalid-feedback errors alert alert-danger">
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback errors alert alert-danger">
                     Username is required.
                 </p>
             </div>
@@ -102,7 +102,7 @@
 </div>
 
 <div>
-    <footer> </footer>
+     <footer> </footer>
 </div>
 
 </body>

@@ -15,20 +15,20 @@
 <div class="container">
     <h2 class="text-center text-white">Update Offer</h2>
     <form
-            th:object="${offerModel}"
-            th:action="@{/offers/{id}/edit(id=*{id})}"
-            th:method="patch"
-            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        th:object="${offerModel}"
+        th:action="@{/offers/{id}/edit(id=*{id})}"
+        th:method="patch"
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label for="mileage" class="text-white font-weight-bold">Mileage</label>
                 <input
-                        id="mileage"
-                        th:field="*{mileage}"
-                        th:errorclass="is-invalid"
-                        type="number"
-                        class="form-control"
-                        placeholder="Mileage in kilometers"/>
+                    id="mileage"
+                    th:field="*{mileage}"
+                    th:errorclass="is-invalid"
+                    type="number"
+                    class="form-control"
+                    placeholder="Mileage in kilometers"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     Mileage in kilometers is required.
                 </p>
@@ -36,11 +36,11 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="price" class="text-white font-weight-bold">Price</label>
                 <input
-                        id="price"
-                        th:field="*{price}"
-                        th:errorclass="is-invalid"
-                        type="number"  class="form-control"
-                        placeholder="Suggested price"/>
+                    id="price"
+                    th:field="*{price}"
+                    th:errorclass="is-invalid"
+                    type="number"  class="form-control"
+                       placeholder="Suggested price"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     Suggested price is required and should be more than 100 BG.
                 </p>
@@ -50,15 +50,15 @@
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="engine">Engine</label>
                 <select
-                        th:name="engine"
-                        th:errorclass="is-invalid"
-                        id="engine" class="form-control">
+                    th:name="engine"
+                    th:errorclass="is-invalid"
+                    id="engine" class="form-control">
                     <option value="">- Select engine type -</option>
                     <option
-                            th:each="anEngine : ${engines}"
-                            th:value="${anEngine}"
-                            th:text="${anEngine}"
-                            th:selected="${anEngine} == *{engine}"
+                        th:each="anEngine : ${engines}"
+                        th:value="${anEngine}"
+                        th:text="${anEngine}"
+                        th:selected="${anEngine} == *{engine}"
                     >
                         Engine type
                     </option>
@@ -70,10 +70,10 @@
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="transmission">Transmission</label>
                 <select
-                        id="transmission"
-                        name="transmission"
-                        th:errorclass="is-invalid"
-                        class="form-control">
+                    id="transmission"
+                    name="transmission"
+                    th:errorclass="is-invalid"
+                    class="form-control">
                     <option value="">- Select transmission type -</option>
                     <option th:each="aTransmission : ${transmissions}"
                             th:value="${aTransmission}"
@@ -90,11 +90,11 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="year" class="text-white font-weight-bold">Year</label>
                 <input
-                        id="year"
-                        th:field="*{year}"
-                        th:errorclass="is-invalid"
-                        type="number" step="1" class="form-control"
-                        placeholder="Manufacturing year"/>
+                    id="year"
+                    th:field="*{year}"
+                    th:errorclass="is-invalid"
+                    type="number" step="1" class="form-control"
+                       placeholder="Manufacturing year"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     Manufacturing year is required.
                 </p>
@@ -135,7 +135,7 @@
 </div>
 
 <div>
-    <footer> </footer>
+		<footer> </footer>
 </div>
 
 </body>

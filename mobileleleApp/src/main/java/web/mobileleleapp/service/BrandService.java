@@ -1,11 +1,12 @@
 package web.mobileleleapp.service;
 
 
-import web.mobileleleapp.models.entities.BrandEntity;
+import web.mobileleleapp.model.view.BrandViewModel;
+import java.util.List;
 
 public interface BrandService {
 
     void initializeBrand();
 
-    BrandEntity findByName(String name);
+    List<BrandViewModel> getAllBrands();
 }
